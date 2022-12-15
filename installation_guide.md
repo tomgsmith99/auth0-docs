@@ -1,6 +1,3 @@
-
-[//]: # (overview)
-
 The Forter Auth0 plugin enables you to add Forter's Trusted Identities decisions to your Auth0 sign-up and sign-in flows. The plugin takes advantage of Auth0's Actions capability.
 
 In a sign-up/registration context, Forter will ensure that users who create accounts are trustworthy (not bots or fraudsters). Forter will issue an `approve` or `decline` decision.
@@ -20,19 +17,14 @@ There are two primary components that make this combination of Auth0 and Forter 
 * The Auth0 `lock.js` library allows you to include Forter's token - which represents the user context - in the Auth0 authentication flow.
 * Auth0 Actions allows you to host the Forter + MFA logic in Auth0, giving you simple, direct access to the front-end user context, the Forter risk API, and the Auth0 MFA engine.
 
+### The Overall Flow
+
+![](https://tomgsmith99-images.s3.amazonaws.com/forter/auth0/flow_diagram.png)
+
 ## Prerequisites
 
-- An Auth0 tenant, with MFA enabled if you want to use MFA.
-
-- An Auth0 `client_id` and `client_secret` for the Management API. This client will be used to:
-
-    - push a Forter correlationID to the user profile, to correlate between the authentication attempt and the MFA handshake
-
-    - pull logs from Auth0 to track MFA success/failure
-
-    - set user status = `blocked` where appropriate.
-
-- A Forter tenant with the following APIs enabled:
+1. An Auth0 account and tenant. [Sign up for free](https://auth0.com/signup).
+2. A Forter tenant with the following APIs enabled:
 
     - Account Login API
 
@@ -40,13 +32,9 @@ There are two primary components that make this combination of Auth0 and Forter 
 
     - Account Authentication Attempt API
 
-[//]: # (architecture)
+If you do not already have a Forter account, please contact Forter at sales@forter.com
 
-## Architecture
-
-![](https://tomgsmith99-images.s3.amazonaws.com/forter/auth0/flow_diagram.png)
-
-[//]: # (installation/installation)
+## Set up Forter decisioning
 
 ### Auth0 Front End
 
@@ -175,16 +163,12 @@ Copy and paste the HTML into the HTML box, and click 'Save Changes'.
 </html>
 ```
 
-[//]: # (installation/auth0_client)
-
 ### Generate an Auth0 Client (Management API)
 
 The Forter plugin will need an Auth0 client_id and client secret to perform some actions on your Auth0 tenant. These actions include:
 
-- updating the user profile with a correlationID
-    - this facilitates Forter's ability to associate a successful MFA event with a user
 - pulling the Auth0 logs to parse for MFA success/failure
-- blocking users
+- blocking users (optional)
     - this can be enabled/disabled in the Action code
 
 To create a new Auth0 client for the Management API:
@@ -228,9 +212,9 @@ On the home screen of the client, click "Settings".
 
 Copy the client_id and client secret to use in the following installation steps.
 
-[//]: # (installation/action)
+## Add the Auth0 Action
 
-### Auth0 Action (Back End)
+**Note:** Once the Action is successfully deployed, all logins for your tenant will be processed by this integration. Before activating the integration in production, [install and verify this Action on a test tenant](https://auth0.com/docs/get-started/auth0-overview/create-tenants/set-up-multiple-environments).
 
 An Auth0 Action will be triggered by a login or registration event.
 
@@ -261,8 +245,6 @@ Click "Create"
 
 Copy and paste the source JavaScript (available in your Forter portal) into the action screen.
 
-[//]: # (installation/flow)
-
 ### Add the Action to your login flow
 
 Now that you have created and deployed the Action, you can add it to your login flow.
@@ -285,9 +267,21 @@ Select the "Forter plugin" Action, and drag it in place between the "Start" and 
 
 Click "Apply" to deploy your Action to the Flow.
 
-[//]: # (testing/testing)
+## Set up MFA tracking in Forter
 
-## Testing the flow
+It's important to keep Forter updated on the outcome of MFA events (success/failure) orchestrated by Auth0.
+
+The outcomes of these events help Forter tune the model to be ever more precise, and more specifically prevent individual users who have successfully satisfied an MFA challenge from being challenged again under similar circumstances.
+
+To enable Forter to track these events, simply fill out the form in your portal.
+
+Go to Settings->Auth0
+
+![](https://tomgsmith99-images.s3.amazonaws.com/forter/auth0/portal_settings.png)
+
+Fill out the fields and click Save.
+
+## Results / Testing the flow
 
 To test the flow, create a few test users.
 
@@ -305,18 +299,4 @@ Authentication->Authentication Profile
 
 Click "Try" to load the built-in Auth0 authentication app.
 
-[//]: # (mfa_status/mfa_status)
-
-## Set up MFA tracking in Forter
-
-It's important to keep Forter updated on the outcome of MFA events (success/failure) orchestrated by Auth0.
-
-The outcomes of these events help Forter tune the model to be ever more precise, and more specifically prevent individual users who have successfully satisfied an MFA challenge from being challenged again under similar circumstances.
-
-To enable Forter to track these events, simply fill out the form in your portal.
-
-Go to Settings->Auth0
-
-![](https://tomgsmith99-images.s3.amazonaws.com/forter/auth0/portal_settings.png)
-
-Fill out the fields and click Save.
+## Troubleshooting

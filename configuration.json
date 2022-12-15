@@ -1,0 +1,72 @@
+
+{
+  "secrets": [
+    {
+      "name": "AUTH0_TENANT",
+      "label": "Auth0 tenant",
+      "description": "(optional): relevant only if we want to block user access on forter decline"
+    },
+    {
+      "name": "AUTH0_CLIENT_ID",
+      "label": "Auth0 client secret",
+      "description": "(optional): relevant only if we want to block user access on forter decline"
+    },
+    {
+      "name": "AUTH0_CLIENT_SECRET",
+      "label": "Auth0 client secret",
+      "description": "(optional): relevant only if we want to block user access on forter decline"
+    },
+    {
+      "name": "FORTER_API_VERSION",
+      "label": "Forter API version",
+      "description": "(required): Forter API Version, used in 'api-version' - Can be found on https://portal.forter.com/app/developer/api/api/general/security-and-authentication (Forter account required)"
+    },
+    {
+      "name": "FORTER_SITE_ID",
+      "label": "Forter Site ID",
+      "description": "(required): Forter Site ID, used in 'x-forter-siteid' header - Can be found on https://portal.forter.com/app/developer/api/api/general/security-and-authentication (Forter account required)"
+    },
+    {
+      "name": "FORTER_KEY",
+      "label": "Forter Key",
+      "description": "Forter API Key, used in 'authorization' - Can be found on https://portal.forter.com/app/developer/api/api/general/security-and-authentication (Forter account required)"
+    }
+  ],
+  "configuration": [
+    {
+      "name": "TEST_MODE",
+      "label": "Test mode",
+      "description": "(optional): If true - ips will be override by Forter logic to simulate APPROVE/DECLINE/VERIFICATION_REQUIRED based on the email (see ovveridIpByEmail)",
+      "default_value": "if not set, defaults to false",
+      "deploy_value": "false"
+    },
+    {
+      "name": "ACCESS_DENY_MESSAGE",
+      "label": "Access deny message",
+      "description": "(optional): Custom error message in case of access deny",
+      "default_value": "sorry, something went wrong.",
+      "deploy_value": "sorry, something went wrong."
+    },
+    {
+      "name": "FORTER_DECISION_FALLBACK",
+      "label": "Forter decision fallback",
+      "description": "(optional): What Auth0 should do in case of an error in the flow: APPROVE/DECLINE/VERIFICATION_REQUIRED",
+      "default_value": "if this value is left empty, Auth0 will MFA the user",
+      "deploy_value": "APPROVE"
+    },
+    {
+      "name": "BLOCK_USER_ON_DECLINE",
+      "label": "Block user on decline",
+      "description": "(optional): If 'true' -> a declined user will have their Auth0 status set to 'block'",
+      "default_value": "if this value is left empty, the action will not block the user",
+      "deploy_value": "true"
+    }
+  ],
+  "dependencies": [ 
+    {
+      "name": "axios",
+      "version": "1.2.1" 
+    }
+  ]
+}
+
