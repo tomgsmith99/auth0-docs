@@ -44,7 +44,8 @@ const ENUMS = {
 	LOGIN_TYPES: {
 		SOCIAL: "SOCIAL",
 		PASSWORD: "PASSWORD"
-	}
+	},
+	PROTOCOL: "https"
 };
 
 /**
@@ -72,7 +73,7 @@ class Auth0Client {
 			data: { access_token: accessToken }
 		} = await axios.request({
 			method: ENUMS.HTTP_METHODS.POST,
-			url: `${this.AUTH0_TENANT}/oauth/token`,
+			url: `${ENUMS.PROTOCOL}://${this.AUTH0_TENANT}/oauth/token`,
 			headers: {
 				[ENUMS.HEADERS_NAMES.CONTENT_TYPE]: ENUMS.HEADERS_VALUES.APP_JSON
 			},
@@ -93,7 +94,7 @@ class Auth0Client {
 		});
 		return await axios.request({
 			method: ENUMS.HTTP_METHODS.PATCH,
-			url: `${this.AUTH0_TENANT}/api/v2/users/${accountId}`,
+			url: `${ENUMS.PROTOCOL}://${this.AUTH0_TENANT}/api/v2/users/${accountId}`,
 			headers: {
 				[ENUMS.HEADERS_NAMES.AUTHORIZATION]: `Bearer  ${accessToken}`,
 				[ENUMS.HEADERS_NAMES.CONTENT_TYPE]: ENUMS.HEADERS_VALUES.APP_JSON
@@ -150,7 +151,7 @@ class ForterClient {
 		const {
 			data: { forterDecision }
 		} = await axios.request({
-			url: `${this.forterBaseUrl}/${ENUMS.EVENT_TYPES.SIGN_UP}/${accountId}`,
+			url: `${ENUMS.PROTOCOL}://${this.forterBaseUrl}/${ENUMS.EVENT_TYPES.SIGN_UP}/${accountId}`,
 			method: ENUMS.HTTP_METHODS.POST,
 			auth: this.auth,
 			headers: {
