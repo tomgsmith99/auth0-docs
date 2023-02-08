@@ -1,4 +1,4 @@
-The Forter Auth0 plugin enables you to add Forter's Trusted Identities decisions to your Auth0 sign-up and sign-in flows. The plugin takes advantage of Auth0's Actions capability.
+The Forter Auth0 plugin enables you to add Forter's Identity Protection decisions to your Auth0 sign-up and sign-in flows. The plugin takes advantage of Auth0's Actions capability.
 
 In a sign-up/registration context, Forter will ensure that users who create accounts are trustworthy (not bots or fraudsters). Forter will issue an `approve` or `decline` decision.
 
@@ -32,7 +32,7 @@ There are two primary components that make this combination of Auth0 and Forter 
 
     - Account Authentication Attempt API
 
-If you do not already have a Forter account, please contact Forter at sales@forter.com
+If you do not already have a Forter account, please contact Forter at auth0@forter.com
 
 ## Set up Forter decisioning
 
